@@ -1,0 +1,4 @@
+
+Konsolen-Befehl: npm init 
+erstellt eine Datei im root des Projekts Namens "package.json".
+In dieser Datei definiert man die third party Module die man in sein Nodejs Projekt einbindet.

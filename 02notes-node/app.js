@@ -7,7 +7,11 @@ const os = require("os");
 // Zugriff auf externe Datei
 // Inhalt der Datei wird sofort ausgeführt
 const notes = require("./notes.js");
-      
+
+// Installiertes npm Modul aufrufen
+const _ = require("lodash"); // <== Das Modul wird genau so aufgerufen wie es in der package.json Datei steht
+
+
 // Param 1: Name der zu erstellenden Datei
 // Param 2: Inhalt der Datei
 //fs.appendFileSync("greeting.txt","Hello World!");
@@ -31,5 +35,16 @@ console.log("note: "+note);
 
 var addition = notes.addNote2(4,4);
 console.log("RESULT: "+addition);
+
+
+// Wir benutzen die Methode isString() von lodash
+console.log(_.isString("HEllo"));
+console.log(_.isString(1));
+console.log(_.isString(true));
+
+// Methode _-uniq von lodash entfernt alle doppelten Einträge
+var fArray = _.uniq(["Dubravko", 1, "Was geht ja",1,2,3,4]);
+console.log(fArray);
+
 
 console.log("Created");

@@ -2,7 +2,8 @@ const express = require('express');
 const hbs = require('hbs'); // Handlebars
 const fs= require('fs');
 
-
+// Wir greifen auf die Umgebungsvariable PORt zu für Heroku
+const port = process.env.PORT || 3000;
 var app = express();
 
 // partials
@@ -114,4 +115,6 @@ app.get('/bad', (req, res) => {
 
 
 // Startet den Server und im Browser 
-app.listen(3000);
+app.listen(port, function(){
+    console.log(`Server is up on port ${port}`);
+});

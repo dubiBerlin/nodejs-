@@ -42,10 +42,6 @@ app.use(function(req, res, next) {
 });
 
 
-app.use((req, res, next)=> {
-    res.render("maintenance.hbs")
-    //next();
-});
 
 
 
@@ -100,6 +96,11 @@ app.get('/about', (req, res) => {
 
 
 
+app.get('/projects', (req, res) =>{
+    res.render('projects.hbs', {
+        pageTitle: 'Projects'
+    })
+})
 
 
 app.get('/bad', (req, res) => {
@@ -113,6 +114,10 @@ app.get('/bad', (req, res) => {
 });
 
 
+app.use((req, res, next)=> {
+    res.render("maintenance.hbs")
+    next();
+});
 
 // Startet den Server und im Browser 
 app.listen(port, function(){

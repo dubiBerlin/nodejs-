@@ -1,0 +1,1 @@
+module.exportsadd= (a,b)=> a+b;

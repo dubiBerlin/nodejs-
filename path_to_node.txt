@@ -1,4 +1,135 @@
+﻿PATH: d: cd git repository/nodejs/node-todo-api
+
+Konsolen-Befehl: process.exit(); beendet node
 
 Konsolen-Befehl: npm init 
 erstellt eine Datei im root des Projekts Namens "package.json".
 In dieser Datei definiert man die third party Module die man in sein Nodejs Projekt einbindet.
+Muss immer ausgeführt werden bevor man ein Modul installiert.
+
+
+Konsolen-Befehl: npm install lodash --save
+installiert das Modul namens "lodash" (https://www.npmjs.com/package/lodash).
+Dabei wird ein Ordner namens "node_modules" erstellt und innerhalb der Ordner des installierten Moduls
+(hier: lodash).
+--save Flag aktuallisiert den Inhalt in der "package.json" Datei.
+
+Konsolen-Befehl: npm install mocha@3.0.0 --save-dev
+Installiert nur für das Projekt und nur für Entwicklung 
+
+
+
+
+!!! ========= NODEMON ========= !!!
+Konsolen-Befehl: npm install nodemon -g
+-g : Installiert das package auf der Maschine und nicht wie im --save nur für das eine bestimmte Projekt/Ordner
+NODEMON bewirkt dass wenn man etwas in der js-Datei aktualisiert, node sofort neu gestartet wird und somit die 
+Änderungen aktualisiert werden.
+nodemon ist ein Komandozeilenbefehl.
+
+Konsolen-Befehl: Nodemon app.js (startet nodemon)
+                 strg+c beendet nodemon
+
+
+////////<<<<<<<<<<<<<<<< 03notes-node - Ordner >>>>>>>>>>>>>>>>>\\\\\\\\\
+Konsolenbefehl: console.log(process.argv);
+
+process.argv nimmt Usereingabe von der CMD ein. Es ist ein Array und der erste Wert wird an der argv[2] Stelle eingefügt.
+
+Konsolenbefehl: nodemon dateiname.js -e js,hbs
+                Sagt nodejs dass es die Erweiterungen beachten soll (hier: js und hbs ) 
+                
+                nodemon --exec "npm test" 
+                Führt den Test aus. "npm test" npm ruft in der package.json den test parameter auf
+
+!!! ========= DEBUGGEN ========= !!!
+Konsolen-Befehl: node INSPECT [ordner]/dateiname.js started den Debugger.
+Konsolen-Befehl: list(10) zeigt die ersten 10 Zeilen aus der JS Datei an
+Konsolen-Befehl: n und c damit läuft man durch das Programm
+Konsolen-Befehl: strg+c+c beendet Debugging
+""    ""   ""  : repl startet die console innerhalb von cmd. Genau so wie die console. in Chrome dev tools.
+
+debugger; in JS Datei 
+""    ""   ""  : node --inspect-brk dateiname.js debuggen aber nicht in der Konsole sondern zb im Browser
+
+
+!!! ========= TESTEN ========= !!!
+
+1. Installieren von Mocha mit "npm install mocha@3.0.0 --save-dev"
+2. Eine Js Test Datei erstellen hier: "utils.test.js"
+3. Die JS Datei, deren Methoden getestet werden sollen, mit require einbinden (hier: require("./utils"));
+4. in der "utils.test.js" mit der mocha Methode it(String,function) einen Test-Case erstellen
+5. mit Befehl 'npm init' eine package.json Datei im Root Ordner erstellen
+6. Den Test Parameter in der package.json wie folgt bearbeiten "test": "mocha **/*.test.js"
+   Erkläerung: Gibt man in der CMD npm test ein, werden alle JS-Dateien die die Endung .test.js haben
+               ausgeführt (hier: utils.test.js)
+7. Neuen Parameter in package.json unter script einfügen und zwar folgenden: "test-watch": "nodemon --exec \"npm test\""
+8. In CMD mit dem Befehl "npm run test-watch" den Test zum laufen bringen.
+9. Expect installieren mit Befehl "npm install expect@1.20.2 --save-dev"
+
+<====== TEST VON EXPRESS
+1. npm i supertest@2.0.0 ---save-dev (https://github.com/visionmedia/supertest)
+2. siehe Code in JS Dateien
+
+<====== TEST VON POST REQUESTS und MONGOOSE bzw MONGODB
+1. Instalation: npm install expect@1.20.2 mocha@3.0.0 nodemon supertest@2.0.0 --save-dev
+2. test/server.test.js Datei erstellen 
+3. in der test/server.test.js expect und supertest einbinden
+4. express app() Funktion aus der server.js exportieren um sie in der server.test.js testen zu können
+5. tests coden ind er /tests/server.test.js coden
+6. In der package.json scripts Option folgend bearbeiten:
+    "scripts": {
+        "test": "mocha server/**/*.test.js",
+        "test-watch": "nodemon --exec \"npm test\""
+      }
+7. Testing lifeCycle Methode beforeEach() in server.test.js einbauen
+
+
+
+
+!!! ========= MONGODB ========= !!!
+
+mongoDB Ordner:      cd Programme\mongodb\Server\3.6\bin
+mongoDb Data Ornder: C:\Users\dp\mongo-data
+
+KonsolenBefehle: "MONGOD" startet den DB-Server   
+                 "MONGO" Wenn wir mongo in die CMD eingeben können wir anschließend MONGO Befehle ausführen
+                 "mongod --dbpath ~/c:\Users\dp\mongo-data 
+                 
+mongo db Befehle:
+db.Todos.insert({text: 'Irgendein text'});
+db.Todos.find(); // gibt alles zurück
+
+Installation von robomongo
+
+
+<====== NODE mit MONGODB VERBINDEN
+Quellen: https://github.com/mongodb/node-mongodb-native
+
+
+
+!!! ========= MONGOOSE ========= !!!
+Seite: http://mongoosejs.com/
+Installation von mongoose: npm install mongoose@5.0.0 --save
+
+
+
+!!! ========= HEROKU ========= !!!
+1. port Variable setzen : const port = process.env.PORT || 3000;
+2. In der package.json Datei angeben wie Heroku die Anwendung starten soll.
+   Unter "scripts" ==> "start": "node server/server.js" einfügen.
+3. In der package.json Datei angeben welche Version von Node Heroku benutzen soll  
+    "engines":{
+      "node":"v9.3.0"
+    }
+4. DB für heroku einrichten: https://elements.heroku.com/addons/mongolab oder direkt bei https://mlab.com
+5. im Root-Ordner des Projekts in cmd folgenden CMD-Befehl ausführen: heroke create 
+6. Addon mongolab einrichten für Heroku: CMD Befehl heroku addons:create mongolab:sandbox 
+
+
+
+
+
+
+
+
